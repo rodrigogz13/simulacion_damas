@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "21soGAzpeTDXGMvE78T8d0F/5Lzdxsn1aiB8y/iRNKxTX258hP/39m4Ngf/1VsAQ3PR0yYYXtWdSV8Fk8YYKFA==",
+  "dgSpecHash": "44+apXPsqQxhrfwVVfFoZLaK4YJ104UkrBhIapjemEiErQ4CxXdF4aOWvrJDkhHe+DuRyJ/7yexn8Y2FAUKfWA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\altoz\\OneDrive\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj",
+  "projectFilePath": "C:\\Users\\altoz\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\altoz\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
     "C:\\Users\\altoz\\.nuget\\packages\\mysqlconnector\\2.3.7\\mysqlconnector.2.3.7.nupkg.sha512",

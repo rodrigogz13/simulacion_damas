@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\altoz\\OneDrive\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj": {}
+    "C:\\Users\\altoz\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\altoz\\OneDrive\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj": {
+    "C:\\Users\\altoz\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\altoz\\OneDrive\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj",
+        "projectUniqueName": "C:\\Users\\altoz\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj",
         "projectName": "simulacion_damas",
-        "projectPath": "C:\\Users\\altoz\\OneDrive\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj",
+        "projectPath": "C:\\Users\\altoz\\Documentos\\GitHub\\simulacion_damas\\simulacion_damas.csproj",
         "packagesPath": "C:\\Users\\altoz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\altoz\\OneDrive\\Documentos\\GitHub\\simulacion_damas\\obj\\",
+        "outputPath": "C:\\Users\\altoz\\Documentos\\GitHub\\simulacion_damas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\altoz\\AppData\\Roaming\\NuGet\\NuGet.Config"

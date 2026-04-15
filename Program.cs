@@ -305,16 +305,17 @@ class Replay
 
         foreach (var (m, jugador, corona) in movs)
         {
+            t.Mostrar();
             Console.ForegroundColor = jugador == "Rojo" ? ConsoleColor.Red : ConsoleColor.Cyan;
-            Console.Write($"\n{jugador}: {Juego.P(m.Fr, m.Fc)}→{Juego.P(m.Tr, m.Tc)}");
+            Console.Write($"{jugador}: {Juego.P(m.Fr, m.Fc)}→{Juego.P(m.Tr, m.Tc)}");
             if (m.Caps.Count > 0) Console.Write($"  captura {m.Caps.Count}");
             if (corona) Console.Write("  ¡CORONACIÓN!");
             Console.ResetColor();
             Console.Write("  [ENTER/q]: ");
             if (Console.ReadKey().KeyChar == 'q') return;
             t = Reglas.Aplicar(t, m);
-            t.Mostrar();
         }
+        t.Mostrar();
         Console.WriteLine($"\nResultado: {info.Estado}  Ganador: {info.Ganador ?? "—"}");
         Console.ReadKey();
     }
