@@ -7,6 +7,18 @@ using System.Text.Json;
 
 const string CONN = "Server=localhost;Port=3306;Database=damas;User=root;Password=;";
 
+// Asegurar que Unicode se muestre correctamente y el buffer no cause artefactos
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+Console.InputEncoding  = System.Text.Encoding.UTF8;
+try
+{
+    // Eliminar el scroll buffer para que Console.Clear() limpie por completo
+    Console.SetBufferSize(Math.Max(Console.WindowWidth, 80), Math.Max(Console.WindowHeight, 30));
+    if (Console.WindowHeight < 30) Console.WindowHeight = 30;
+    if (Console.WindowWidth  < 50) Console.WindowWidth  = 50;
+}
+catch { /* Algunos terminales no permiten cambiar el tamaño */ }
+
 var bd = new BD(CONN);
 try { bd.Init(); }
 catch (Exception ex)
@@ -19,10 +31,9 @@ catch (Exception ex)
 // ── Menú ──────────────────────────────────────────────────────────────────────
 while (true)
 {
+    Console.ResetColor();
     Console.Clear();
-    Console.WriteLine("╔══════════════════════════╗");
-    Console.WriteLine("║    DAMAS INGLESAS        ║");
-    Console.WriteLine("╚══════════════════════════╝");
+    Console.WriteLine("DAMAS INGLESAS");
     Console.WriteLine("1. Nueva partida");
     Console.WriteLine("2. Reproducir partida guardada");
     Console.WriteLine("3. Historial");
@@ -55,19 +66,18 @@ static void ReproducirMenu(BD bd)
         new Replay(bd).Ejecutar(id);
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-//  TABLERO
+// 
+//  
 //  Valores: 0=vacía  1=roja  2=Reina roja  3=negra  4=Reina negra
-//  Casillas oscuras (jugables): (fila + col) % 2 == 0
+//  Casillas oscuras (jugables): (fila + col) % 2 != 0
 //  Fila 0 = arriba (lado negro)   Fila 7 = abajo (lado rojo)
-// ══════════════════════════════════════════════════════════════════════════════
 class Tablero
 {
     public int[,] C = new int[8, 8];
 
     public static bool EsRojo(int p)  => p is 1 or 2;
     public static bool EsNegro(int p) => p is 3 or 4;
-    public static bool Oscura(int r, int c) => (r + c) % 2 == 0;
+    public static bool Oscura(int r, int c) => (r + c) % 2 != 0;
 
     public Tablero Clonar() { var t = new Tablero(); Array.Copy(C, t.C, 64); return t; }
 
@@ -85,6 +95,17 @@ class Tablero
 
     public void Mostrar()
     {
+        Console.ResetColor();
+        // Igualar buffer al tamaño de ventana para que Console.Clear() limpie
+        // realmente sin dejar contenido en el scroll (necesario en Windows Terminal)
+        try
+        {
+            int w = Math.Max(Console.WindowWidth,  80);
+            int h = Math.Max(Console.WindowHeight, 32);
+            if (Console.BufferWidth  != w || Console.BufferHeight != h)
+                Console.SetBufferSize(w, h);
+        }
+        catch { }
         Console.Clear();
         Console.WriteLine("      a   b   c   d   e   f   g   h");
         Console.WriteLine("    ┌───┬───┬───┬───┬───┬───┬───┬───┐");
@@ -215,7 +236,7 @@ class Juego
 
         Console.Clear();
         Console.WriteLine($"Partida #{id}  |  ROJAS van primero");
-        Console.WriteLine("Formato: c3-d4   'ayuda' = ver opciones   'salir' = abandonar");
+        Console.WriteLine("Formato: b3-a4   'ayuda' = ver opciones   'salir' = abandonar");
         Console.ReadKey();
 
         while (true)
@@ -242,7 +263,15 @@ class Juego
             if (inp is "ayuda" or "?") { Ayuda(t, validos); continue; }
 
             var mov = Parsear(inp, validos);
-            if (mov == null) { Console.WriteLine("Inválido."); Thread.Sleep(1100); continue; }
+            if (mov == null)
+            {
+                var ej = validos.Count > 0 ? $"  Ej: {Juego.P(validos[0].Fr, validos[0].Fc)}-{Juego.P(validos[0].Tr, validos[0].Tc)}" : "";
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Movimiento inválido.{ej}  (escribe 'ayuda' para ver todas las opciones)");
+                Console.ResetColor();
+                Thread.Sleep(1600);
+                continue;
+            }
 
             bool corona = (t.C[mov.Fr, mov.Fc] == 1 && mov.Tr == 0)
                        || (t.C[mov.Fr, mov.Fc] == 3 && mov.Tr == 7);
